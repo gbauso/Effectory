@@ -1,0 +1,4 @@
+<div class="d-flex justify-content-center">
+    <app-card [text]=item.title (click)="startSurvey(item.id)" *ngFor="let item of surveys$ | async">
+    </app-card>
+</div>

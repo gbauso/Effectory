@@ -1,0 +1,16 @@
+.answers input[type='radio']{
+    display: none;
+}
+
+.answers input[type='radio']:checked ~ label {
+    font-weight: bold;
+}
+
+label {
+    margin: 0;
+    cursor: pointer;
+}
+
+.answer {
+    min-height: 200px;
+}

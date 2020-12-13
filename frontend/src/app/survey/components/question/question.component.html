@@ -1,0 +1,20 @@
+<section *ngIf="question">
+    <h4 class="text-center">{{question.subject.subject}}</h4>
+    <h3 class="text-center">{{question.question}}</h3>
+    <form class="mt-4" [formGroup]="answerForm" (ngSubmit)="onSubmit(answerForm.value)">
+        <textarea class="md-textarea form-control answer" formControlName="answer"
+            *ngIf="isTextArea; else elseBlock"></textarea>
+        <ng-template #elseBlock>
+            <section class="answers">
+                <div class="d-flex justify-content-center" *ngFor=" let item of question.answers; index as i">
+                    <input type="radio" formControlName="answerId" [id]=item.id [value]=item.id />
+                    <label [for]=item.id>{{item.text}}</label>
+                </div>
+            </section>
+        </ng-template>
+        <section *ngIf="canSubmit" class="mt-5 text-center">
+            <button class="btn btn-success" type="submit">Go</button>
+        </section>
+    </form>
+
+</section>
