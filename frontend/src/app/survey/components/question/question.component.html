@@ -13,7 +13,9 @@
             </section>
         </ng-template>
         <section *ngIf="canSubmit" class="mt-5 text-center">
-            <button class="btn btn-success" type="submit">Go</button>
+            <button class="btn btn-success" type="submit">
+                <fa-icon [icon]="icon"></fa-icon>
+            </button>
         </section>
     </form>
 

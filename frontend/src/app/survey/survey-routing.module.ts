@@ -4,21 +4,23 @@ import { SurveyFinishedComponent } from './components/survey-finished/survey-fin
 import { SurveyListComponent } from './components/survey-list/survey-list.component';
 import { SurveyComponent } from './components/survey/survey.component';
 
-const routes: Routes = [{
-  path: '',
-  component: SurveyListComponent
-},
-{
-  path: 'survey/:id',
-  component: SurveyComponent
-},
-{
-  path: 'finished',
-  component: SurveyFinishedComponent
-}];
+const routes: Routes = [
+  {
+    path: '',
+    component: SurveyListComponent,
+  },
+  {
+    path: 'survey/:id',
+    component: SurveyComponent,
+  },
+  {
+    path: 'finished',
+    component: SurveyFinishedComponent,
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SurveyRoutingModule { }
+export class SurveyRoutingModule {}

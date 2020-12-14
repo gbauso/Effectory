@@ -1,4 +1,4 @@
 export default interface SimpleQuestionnaire {
-    id: number;
-    title: string;
+  id: number;
+  title: string;
 }

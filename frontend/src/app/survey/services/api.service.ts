@@ -13,20 +13,14 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   public getSurveyList(): Observable<SimpleQuestionnaire[]> {
-    return this.http.get<SimpleQuestionnaire[]>(
-      `${environment.baseUrl}/questionnaire`
-    );
+    return this.http.get<SimpleQuestionnaire[]>(`${environment.baseUrl}/questionnaire`);
   }
 
   public getSurvey(id: string): Observable<Questionnaire> {
-    return this.http.get<Questionnaire>(
-      `${environment.baseUrl}/questionnaire/${id}`
-    );
+    return this.http.get<Questionnaire>(`${environment.baseUrl}/questionnaire/${id}`);
   }
 
   public answerQuestion(request: AnswerQuestionRequest) {
-    return this.http.post(
-      `${environment.baseUrl}/questionnaire`
-    , request);
+    return this.http.post(`${environment.baseUrl}/questionnaire`, request);
   }
 }

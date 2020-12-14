@@ -1,0 +1,9 @@
+# these are project build folders
+dist/
+build/
+src/serviceWorker.js
+*.md
+
+# NOTE: ESLint ignores node_modules by default, but only in the root folder.
+#       This ensures that also the other node_modules folders are ignored.
+node_modules/
