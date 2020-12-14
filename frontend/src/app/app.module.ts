@@ -8,6 +8,8 @@ import { environment } from '../environments/environment';
 import { SurveyModule } from './survey/survey.module';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ProblemComponent } from './shared/components/problem/problem.component';
+import { HttpErrorInterceptor } from './shared/interceptors/error-handling';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,13 @@ import { ProblemComponent } from './shared/components/problem/problem.component'
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     SurveyModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
