@@ -1,5 +1,7 @@
 ﻿using Effectory.Shared.Domain;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Effectory.Core.Model.SurveyResponse
 {
@@ -21,14 +23,26 @@ namespace Effectory.Core.Model.SurveyResponse
             IDictionary<string, string> question,
             IEnumerable<IDictionary<string, string>> answers,
             string answer,
-            int? answerIndex) => 
-                new QuestionResponse()
-                {
-                    Subject = subject,
-                    Answer = answer,
-                    Question = question,
-                    Answers = answers,
-                    AnswerIndex = answerIndex
-                };
+            int? answerIndex)
+        {
+            if (!subject.Any() ||
+               !question.Any() ||
+               !answers.Any() ||
+               (string.IsNullOrEmpty(answer)
+               && !answerIndex.HasValue))
+            {
+                throw new ArgumentException();
+            }
+
+
+            return new QuestionResponse()
+            {
+                Subject = subject,
+                Answer = answer,
+                Question = question,
+                Answers = answers,
+                AnswerIndex = answerIndex
+            };
+        }
     }
 }

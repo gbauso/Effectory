@@ -29,13 +29,22 @@ namespace Effectory.Core.Model.Response
             return SurveyResponseId != Guid.Empty && QuestionnaireId != 0;
         }
 
-        public static SurveyResponse Create(Guid executionId, int questionnaireId) => new SurveyResponse
+        public static SurveyResponse Create(Guid executionId, int questionnaireId)
         {
-            QuestionnaireId = questionnaireId,
-            SurveyResponseId = executionId,
-            Responses = new List<QuestionResponse>(),
-            State = EntityState.Added,
-        };
+            if (executionId == Guid.Empty)
+                throw new ArgumentException();
+
+            if(questionnaireId == 0)
+                throw new ArgumentException();
+
+            return new SurveyResponse
+            {
+                QuestionnaireId = questionnaireId,
+                SurveyResponseId = executionId,
+                Responses = new List<QuestionResponse>(),
+                State = EntityState.Added,
+            };
+        }
 
     }
 }

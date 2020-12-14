@@ -9,17 +9,25 @@ namespace Effectory.Core.Model
 {
     public class Questionnaire : AggregateRootBase
     {
+        private Questionnaire()
+        {
+
+        }
+
         public int QuestionnaireId { get; private set; }
         public IDictionary<string, string> Texts { get; private set; }
         public ICollection<Subject> Subjects { get; private set; }
 
         public override bool IsValid()
         {
-            return QuestionnaireId > 0 && Subjects.Any();
+            return QuestionnaireId > 0 && Subjects.Any() && Texts.Any();
         }
 
         public void AnswerQuestion(int subjectId , int questionId, int? answerId, string answer, Guid executionId)
         {
+            if (string.IsNullOrEmpty(answer) && !answerId.HasValue || executionId == Guid.Empty)
+                throw new ArgumentException();
+
             if (!Subjects.Any(i => i.SubjectId == subjectId))
                 throw new DomainException();
 
