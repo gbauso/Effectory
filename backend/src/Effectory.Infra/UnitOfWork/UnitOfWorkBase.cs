@@ -42,14 +42,21 @@ namespace Effectory.Infra.UnitOfWork
             if (ManagedObject == null)
                 throw new Exception();
 
-            _eventSender.SendEvents(ManagedObject.GetEventsToSend());
-            ManagedObject.ClearEvents();
-            if (ManagedObject.State != EntityState.Unchanged)
+            using(var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                await _repository.Save(ManagedObject);
-            }
+                _eventSender.SendEvents(ManagedObject.GetEventsToSend());
+                ManagedObject.ClearEvents();
+                if (ManagedObject.State != EntityState.Unchanged)
+                {
+                    await _repository.Save(ManagedObject);
+                }
 
-            await _distributedCache.AddOrUpdateEntry(_distributedCacheEntryOptions, CacheKey, ManagedObject);
+                await _distributedCache.AddOrUpdateEntry(_distributedCacheEntryOptions,
+                                                         CacheKey,
+                                                         ManagedObject);
+
+                transaction.Complete();
+            }
         }
 
         public async Task<T> GetOrCreate(object by, Func<T> objectCreation = null)
