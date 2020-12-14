@@ -1,7 +1,7 @@
 FROM node:13 as build
 
 WORKDIR /opt/ng
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 RUN npm install
 
