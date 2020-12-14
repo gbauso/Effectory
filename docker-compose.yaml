@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - 8080:80
+    environment:
+      - BACKEND_API_URL=http://localhost:5001/api
+    
+  backend:
+    build: ./backend
+    ports:
+      - 5001:80
+    environment:
+      - ServiceBus__Url=rabbitmq://rabbitmq
+      - ServiceBus__Username=admin
+      - ServiceBus__Password=Secr3t
+      - ConnectionStrings__MongoDb=mongodb://mongodb:27017
+      - Cache__Host=redis
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - redis
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    restart: always
+    ports:
+      - 8081:15672
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Secr3t
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - 6379:6379
+
+  mongodb:
+    image: mongo:4.4.2-bionic
+    ports:
+      - 27017:27017
+  
+  seed:
+    build: ./infra/mongodb/seed
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
